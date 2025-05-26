@@ -9,10 +9,10 @@ public class Display {
     public static int sum(int a, int b) {
 
         if (a > 0 && b > Integer.MAX_VALUE - a) {
-            throw new ArithmeticException("Positive in sum");
+            throw new ArithmeticException("Positive sum");
         }
         if (a < 0 && b < Integer.MIN_VALUE - a) {
-            throw new ArithmeticException("Negative in sum");
+            throw new ArithmeticException("Negative sum");
         }
         return a + b;
     }
