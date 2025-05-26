@@ -12,7 +12,7 @@ public class Display {
             throw new ArithmeticException("Positiv sum");
         }
         if (a < 0 && b < Integer.MIN_VALUE - a) {
-            throw new ArithmeticException("Negative in sum");
+            throw new ArithmeticException("Negative sum");
         }
         return a + b;
     }
