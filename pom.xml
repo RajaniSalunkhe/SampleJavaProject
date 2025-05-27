@@ -5,7 +5,7 @@
   <groupId>io.github.rajanisalunkhe</groupId>
   <artifactId>java-sample-project</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.1</version>
 
   <name>Java Sample Project</name>
   <description>Demo for testing Sample</description>
