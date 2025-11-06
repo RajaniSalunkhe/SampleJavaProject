@@ -22,16 +22,16 @@ pipeline {
                   secrets: [[
                     id: 11270,
                     mappings: [
-                      [environmentVariable: 'REPO_USER', field: 'username'],
-                      [environmentVariable: 'REPO_PASS', field: 'password']
+                      [environmentVariable: 'username', field: 'username'],
+                      [environmentVariable: 'password', field: 'password']
                     ]
                   ]]
             ]) {
               // inside here, REPO_USER and REPO_PASS environment vars are available
-              if (!env.REPO_USER || !env.REPO_PASS) {
+              if (!env.username || !env.password) {
                 error("Failed to fetch repository credentials from Secret Server (empty fields).")
               }
-              echo "Successfully fetched repo credentials (user: ${env.REPO_USER})"
+              echo "Successfully fetched repo credentials (user: ${env.username})"
             }
           } catch (err) {
             // fail fast and avoid checking out the branch if secrets could not be retrieved
