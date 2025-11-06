@@ -1,71 +1,64 @@
 pipeline {
-    agent any   // Use any Jenkins node
+    agent any
 
     tools {
-        // Make sure these tools are configured in Jenkins under "Global Tool Configuration"
-        maven 'Maven3'     // or whatever name you used for Maven
-        jdk 'JDK17'        // or your configured JDK version
+        maven 'Maven3'
+        jdk 'jdk17'
     }
 
     environment {
-        // Define environment variables if needed
-        BUILD_ENV = 'development'
+        PATH = "${tool 'Maven3'}/bin:${env.PATH}"
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 echo '--- Checking out source code ---'
                 checkout scm
-                sh 'ls -l'
             }
         }
 
         stage('Build') {
             steps {
-                echo '--- Building project ---'
-                sh 'mvn clean package -DskipTests'
+                echo '--- Building the project ---'
+                bat 'mvn clean install'
             }
         }
 
         stage('Test') {
             steps {
-                echo '--- Running unit tests ---'
-                sh 'mvn test'
+                echo '--- Running tests ---'
+                bat 'mvn test'
             }
         }
 
         stage('Code Analysis') {
             steps {
-                echo '--- Running static analysis (optional) ---'
-                // Example: Uncomment if you use SonarQube
-                // sh 'mvn sonar:sonar'
+                echo '--- Running static analysis ---'
+                bat 'mvn checkstyle:check'
             }
         }
 
         stage('Deploy') {
-            when {
-                branch 'main'   // Only deploy from main branch
-            }
             steps {
-                echo '--- Deploying project (main branch only) ---'
-                // Add your deployment logic here
-                // Example: copy artifacts, call script, or deploy to a server
-                sh 'echo "Deploying artifact..."'
+                echo '--- Deploying artifact ---'
+                // Example deployment command
+                bat 'echo Deploy step placeholder'
             }
         }
     }
 
     post {
-        success {
-            echo 'Build completed successfully!'
+        always {
+            echo 'Cleaning workspace...'
+            cleanWs() // workspace cleanup
         }
         failure {
             echo 'Build failed. Please check logs.'
         }
-        always {
-            echo 'Cleaning workspace...'
-            cleanWs()
+        success {
+            echo 'Build succeeded!'
         }
     }
 }
