@@ -58,10 +58,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Build completed successfully!'
+            echo 'Build completed successfully!'
         }
         failure {
-            echo '❌ Build failed. Please check logs.'
+            echo 'Build failed. Please check logs.'
         }
         always {
             echo 'Cleaning workspace...'
