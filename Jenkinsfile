@@ -22,10 +22,10 @@ pipeline {
             ]
           ]]) {
             // promote secrets to global vars for later stages
-            env.username = env.username
-            env.password = env.password
+            env.MAVEN_USERNAME = env.username
+            env.MAVEN_PASSWORD = env.password
             echo "Secret fetched successfully from Delinea"
-            echo "Username (masked): ${env.password}"
+            echo "Username (masked): ${env.MAVEN_USERNAME}"
           }
         }
       }
@@ -60,8 +60,8 @@ pipeline {
             <servers>
               <server>
                 <id>${env.MAVEN_SERVER_ID}</id>
-                <username>${env.username}</username>
-                <password>${env.password}</password>
+                <username>${env.MAVEN_USERNAME}</username>
+                <password>${env.MAVEN_PASSWORD}</password>
               </server>
             </servers>
           </settings>
@@ -76,9 +76,9 @@ pipeline {
       steps {
         script {
           if (isUnix()) {
-            sh 'mvn -B -s ci-settings.xml deploy -DskipTests'
+            sh 'mvn -B -s ci-settings.xml deploy -PsonatypeDeploy deploy'
           } else {
-            bat 'mvn -B -s ci-settings.xml deploy -DskipTests'
+            bat 'mvn -B -s ci-settings.xml deploy -PsonatypeDeploy deploy'
           }
         }
       }
